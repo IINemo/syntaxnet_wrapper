@@ -107,14 +107,4 @@ class ProcessorSyntaxNet(object):
             result.append(new_sent)
         
         return result
-    
-    
-text = u'косил косой косой косой .'
-proc = ProcessorSyntaxNet('exn5.isa.ru', 8111)
-reply = proc.parse(text)
-
-for sent in reply:
-    for word in sent:
-        print word
-    print
 
