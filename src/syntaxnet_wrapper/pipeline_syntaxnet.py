@@ -17,15 +17,3 @@ class PipelineSyntaxNet(object):
         trees = self.syntaxnet_parser_.parse(text, sents)
         
         return trees
-
-
-#text = u'Мама мыла раму "3.5". «Дом», который - построил Джек... Биссектриса -- это kingsbounty@gmail.com http://yandex.ru'
-text = u'Мама мыла раму. Дом, который - построил Джек...'
-
-ppl = PipelineSyntaxNet('exn5.isa.ru', 8111)
-result = ppl.process(text)
-
-for s in result:
-    for w in s:
-        print w, text[w.begin : w.end]
-    print '------------'
