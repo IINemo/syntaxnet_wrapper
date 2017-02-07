@@ -1,1 +1,1 @@
-from syntaxnet_wrapper import ProcessorSyntaxNet
+from processor_syntaxnet import ProcessorSyntaxNet
