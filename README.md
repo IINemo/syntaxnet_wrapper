@@ -1,10 +1,10 @@
 # Description
-A Python 2.7 wrapper for Google's SyntaxNet parser.
-The wrapper is considered to work with dockerized syntaxnet server available at https://github.com/IINemo/docker-syntaxnet_rus . 
+A Python 2.7 wrapper for [Google's SyntaxNet parser](https://www.tensorflow.org/tutorials/syntaxnet/).
+The wrapper is considered to work with dockerized [SyntaxNet server](https://github.com/IINemo/docker-syntaxnet_rus). 
 The wrapper connects to container via tcp and performs basic preparation/parsing of SyntaxNet parser results.
 
 # Basic usage
-The basic example of usage is presented in src/test.py https://github.com/IINemo/syntaxnet_wrapper/blob/master/src/test.py
+The basic example of usage is presented in [src/test.py](https://github.com/IINemo/syntaxnet_wrapper/blob/master/src/test.py)
 
 ## 1. Using ProcessorSyntaxNet
 ProcessorSyntaxNet needs tokenized and splitted text for work. It can also handle only raw unicode text, in which words are splitted by spaces.
