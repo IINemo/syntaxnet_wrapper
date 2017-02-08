@@ -15,15 +15,11 @@ if __name__ == '__main__':
                         required = True,
                         help = 'Syntaxnet server port.',
                         default = 8111)
-
-    #args = parser.parse_args()
+    args = parser.parse_args()
     
-    #proc = ProcessorSyntaxNet(args.host, int(args.port))
-    proc = ProcessorSyntaxNet('exn5.isa.ru', 8111)
+    proc = ProcessorSyntaxNet(args.host, int(args.port))
     
     text = sys.stdin.read().decode('utf8').strip()
-    print text
-    #text = u'мама мыла рам'
     result = proc.parse(text)
     
     for sent in result:
