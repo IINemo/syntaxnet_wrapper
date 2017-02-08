@@ -34,18 +34,19 @@ class ProcessorSyntaxNet(object):
     def _prepare_raw_input_for_syntaxnet(self, text, sentences):
         raw_input_s = u''
         if not sentences:
-            raw_input_s = text + u'\n'
+            raw_input_s = text + u'\n\n'
         else:
             for sent in sentences:
                 line = u' '.join((text[e.begin : e.end] for e in sent))
                 raw_input_s += line
                 raw_input_s += u'\n'
+            raw_input_s += u'\n'
         
         return raw_input_s.encode('utf8')
         
     def _read_all_from_socket(self, sock):
         buf = str()
-
+        
         while True:
             data = sock.recv(1024)
             if data:
