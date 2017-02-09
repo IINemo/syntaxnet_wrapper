@@ -10,7 +10,7 @@ class ProcessorSyntaxNet(object):
     
     def parse(self, input_text, sentences = None):
         raw_input_s = self._prepare_raw_input_for_syntaxnet(input_text, 
-                                                            sentences)
+                                                            sentences)        
         
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.connect((self.host_, self.port_))
