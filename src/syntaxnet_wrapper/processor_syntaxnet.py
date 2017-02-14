@@ -58,8 +58,7 @@ class ProcessorSyntaxNet(object):
         #         if '\n\n\n' in buf:
         #             break
         # except socket.error as err:
-        #     print 'Socket ERROR ERROR'
-        #     print >>sys.stderr, err
+	#         print >>sys.stderr, 'Err: Socket error: ', err
         
         try:
             while True:
