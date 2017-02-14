@@ -1,6 +1,7 @@
 import socket
 from annotation import Word
 from conll_format_parser import ConllFormatStreamParser
+import sys
 
 
 class ProcessorSyntaxNet(object):
@@ -14,9 +15,12 @@ class ProcessorSyntaxNet(object):
         
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.connect((self.host_, self.port_))
-        sock.send(raw_input_s)
+        sock.sendall(raw_input_s)
         raw_output_s = self._read_all_from_socket(sock)
         sock.close()
+
+        if not raw_output_s:
+            return None
         
         trees = self._parse_conll_format(raw_output_s)
         
@@ -46,27 +50,48 @@ class ProcessorSyntaxNet(object):
         
     def _read_all_from_socket(self, sock):
         buf = str()
+
+        # try:
+        #     while True:
+        #         chunk = sock.recv(51200)
+        #         buf += chunk
+        #         if '\n\n\n' in buf:
+        #             break
+        # except socket.error as err:
+        #     print 'Socket ERROR ERROR'
+        #     print >>sys.stderr, err
         
-        while True:
-            data = sock.recv(1024)
-            if data:
-                buf += data
-            else:
-                break
-        
+        try:
+            while True:
+                data = sock.recv(51200)
+                if data:
+                    buf += data
+                else:
+                    break
+        except socket.error as err:
+            print >>sys.stderr, 'Err: Socket error: ', err
+
         return buf
   
     def _parse_conll_format(self, string):
-        result = list()
-        for sent in ConllFormatStreamParser(string):
-            new_sent = list()
-            for word in sent:
-                new_word = Word(word_form = word[1].decode('utf8'), 
-                                pos_tag = word[3].decode('utf8'),
-                                morph = word[5].decode('utf8'),
-                                parent = int(word[6]) - 1,
-                                link_name = word[7].decode('utf8'))
-                new_sent.append(new_word)
-            result.append(new_sent)
-        
-        return result
+        try:
+            result = list()
+            for sent in ConllFormatStreamParser(string):
+                new_sent = list()
+                for word in sent:
+                    new_word = Word(word_form = word[1].decode('utf8'), 
+                                    pos_tag = word[3].decode('utf8'),
+                                    morph = word[5].decode('utf8'),
+                                    parent = int(word[6]) - 1,
+                                    link_name = word[7].decode('utf8'))
+                    new_sent.append(new_word)
+                result.append(new_sent)
+            
+            return result
+        except IndexError as err:
+            print >>sys.stderr, 'Err: Index error:', err
+            print >>sys.stderr, '----------------------------'
+            print >>sys.stderr, string
+            print >>sys.stderr, '----------------------------'
+            raise
+
