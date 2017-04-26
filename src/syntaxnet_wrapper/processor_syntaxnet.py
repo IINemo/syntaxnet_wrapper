@@ -9,7 +9,7 @@ class ProcessorSyntaxNet(object):
         self.host_ = host
         self.port_ = port
     
-    def parse(self, input_text, sentences = None):
+    def parse(self, input_text, sentences = None, raw_output = False):
         raw_input_s = self._prepare_raw_input_for_syntaxnet(input_text, 
                                                             sentences)        
         
@@ -22,6 +22,9 @@ class ProcessorSyntaxNet(object):
         if not raw_output_s:
             return None
         
+        if raw_output:
+            return raw_output_s
+
         trees = self._parse_conll_format(raw_output_s)
         
         if sentences:
@@ -50,15 +53,6 @@ class ProcessorSyntaxNet(object):
         
     def _read_all_from_socket(self, sock):
         buf = str()
-
-        # try:
-        #     while True:
-        #         chunk = sock.recv(51200)
-        #         buf += chunk
-        #         if '\n\n\n' in buf:
-        #             break
-        # except socket.error as err:
-	#         print >>sys.stderr, 'Err: Socket error: ', err
         
         try:
             while True:

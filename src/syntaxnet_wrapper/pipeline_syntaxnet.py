@@ -11,9 +11,9 @@ class PipelineSyntaxNet(object):
         self.sent_splitter_ = SentenceSplitter()
         self.syntaxnet_parser_ = ProcessorSyntaxNet(host, port)
     
-    def process(self, text):
+    def process(self, text, raw_output = False):
         tokens = list(self.word_tokeniser_.span_tokenize(text))
         sents = self.sent_splitter_.process(text, tokens)
-        trees = self.syntaxnet_parser_.parse(text, sents)
+        trees = self.syntaxnet_parser_.parse(text, sents, raw_output = raw_output)
         
         return trees
