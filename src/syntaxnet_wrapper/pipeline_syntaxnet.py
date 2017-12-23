@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from tokenizer_ru import create_tokenizer_ru
-from sentence_splitter import SentenceSplitter
-from processor_syntaxnet import ProcessorSyntaxNet
+from .tokenizer_ru import create_tokenizer_ru
+from .sentence_splitter import SentenceSplitter
+from .processor_syntaxnet import ProcessorSyntaxNet
 
 
 class PipelineSyntaxNet(object):
