@@ -17,7 +17,7 @@ from syntaxnet_wrapper import ProcessorSyntaxNet
 def print_result(result):
     for sent in result:
         for word in sent:
-            print word
+            print(word)
         print
 
 host = '<myhsot>'
@@ -40,7 +40,7 @@ from syntaxnet_wrapper import PipelineSyntaxNet
 def print_result(result):
     for sent in result:
         for word in sent:
-            print word
+            print(word)
         print
 
 host = '<myhsot>'

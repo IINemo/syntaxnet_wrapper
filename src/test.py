@@ -12,8 +12,6 @@ def print_result(result):
 
 
 if __name__ == '__main__':
-    from syntaxnet_wrapper import PipelineSyntaxNet
-
     host = 'localhost'
     port = 8111
     text = 'Мама мыла раму. Дом, который построил Джек.'
