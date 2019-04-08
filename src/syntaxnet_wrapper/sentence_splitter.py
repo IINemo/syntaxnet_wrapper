@@ -1,4 +1,4 @@
-from annotation import Span
+from .annotation import Span
 from nltk.tokenize.punkt import PunktSentenceTokenizer
 
 

@@ -1,5 +1,5 @@
 # Description
-A Python 2.7 wrapper for [Google's SyntaxNet parser](https://www.tensorflow.org/tutorials/syntaxnet/).
+A Python 3 wrapper for [Google's SyntaxNet parser](https://www.tensorflow.org/tutorials/syntaxnet/).
 The wrapper is considered to work with dockerized [SyntaxNet server](https://github.com/IINemo/docker-syntaxnet_rus). 
 The wrapper connects to container via tcp and performs basic preparation/parsing of SyntaxNet parser results.
 
@@ -17,7 +17,7 @@ from syntaxnet_wrapper import ProcessorSyntaxNet
 def print_result(result):
     for sent in result:
         for word in sent:
-            print word
+            print(word)
         print
 
 host = '<myhsot>'
@@ -40,7 +40,7 @@ from syntaxnet_wrapper import PipelineSyntaxNet
 def print_result(result):
     for sent in result:
         for word in sent:
-            print word
+            print(word)
         print
 
 host = '<myhsot>'

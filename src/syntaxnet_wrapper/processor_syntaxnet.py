@@ -1,6 +1,6 @@
 import socket
-from annotation import Word
-from conll_format_parser import ConllFormatStreamParser
+from .annotation import Word
+from .conll_format_parser import ConllFormatStreamParser
 import sys
 
 
@@ -39,17 +39,17 @@ class ProcessorSyntaxNet(object):
                 p_word.end = in_word.end
     
     def _prepare_raw_input_for_syntaxnet(self, text, sentences):
-        raw_input_s = u''
+        raw_input_s = ''
         if not sentences:
-            raw_input_s = text + u'\n\n'
+            raw_input_s = text + '\n\n'
         else:
             for sent in sentences:
-                line = u' '.join((text[e.begin : e.end] for e in sent))
+                line = ' '.join((text[e.begin : e.end] for e in sent))
                 raw_input_s += line
-                raw_input_s += u'\n'
-            raw_input_s += u'\n'
+                raw_input_s += '\n'
+            raw_input_s += '\n'
         
-        return raw_input_s.encode('utf8')
+        return raw_input_s.encode('utf-8')
         
     def _read_all_from_socket(self, sock):
         buf = str()
@@ -58,11 +58,11 @@ class ProcessorSyntaxNet(object):
             while True:
                 data = sock.recv(51200)
                 if data:
-                    buf += data
+                    buf += data.decode('utf-8') #"".join(map(chr, data))
                 else:
                     break
         except socket.error as err:
-            print >>sys.stderr, 'Err: Socket error: ', err
+            print('Err: Socket error: ', err, file=sys.stderr)
 
         return buf
   
@@ -72,19 +72,19 @@ class ProcessorSyntaxNet(object):
             for sent in ConllFormatStreamParser(string):
                 new_sent = list()
                 for word in sent:
-                    new_word = Word(word_form = word[1].decode('utf8'), 
-                                    pos_tag = word[3].decode('utf8'),
-                                    morph = word[5].decode('utf8'),
+                    new_word = Word(word_form = word[1], 
+                                    pos_tag = word[3],
+                                    morph = word[5],
                                     parent = int(word[6]) - 1,
-                                    link_name = word[7].decode('utf8'))
+                                    link_name = word[7])
                     new_sent.append(new_word)
                 result.append(new_sent)
             
             return result
         except IndexError as err:
-            print >>sys.stderr, 'Err: Index error:', err
-            print >>sys.stderr, '----------------------------'
-            print >>sys.stderr, string
-            print >>sys.stderr, '----------------------------'
+            print('Err: Index error:', err, file=sys.stderr)
+            print('----------------------------', file=sys.stderr)
+            print(string, file=sys.stderr)
+            print('----------------------------', file=sys.stderr)
             raise
 
